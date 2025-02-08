@@ -6,7 +6,10 @@ import {
   ProfilePage,
   LoginPage,
   RegisterPage,
+  NotFoundPage,
+  OopsPage,
 } from "./views/pages";
+
 
 import RootLayout from "./views/layouts/RootLayout";
 import PageTransition from "./components/PageTransition";
@@ -20,8 +23,8 @@ function App() {
         <Route path="signin" element={<LoginPage />} />
 
         {/* TODO: add a 404 page and 500 page with redirect button to home */}
-        <Route path="/oops" element={<div>Oops</div>} />
-        <Route path="/404" element={<div>404</div>} />
+        <Route path="/oops" element={<OopsPage/>} />
+        <Route path="/404" element={<NotFoundPage/>} />
 
         {/* private routes */}
         <Route element={<PageTransition />}>
