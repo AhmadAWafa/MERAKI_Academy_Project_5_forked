@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from "react-router";
+import { ThemeProvider } from "./components/theme/theme-provider";
+import {
+  HomePage,
+  ExplorePage,
+  ProfilePage,
+  LoginPage,
+  RegisterPage,
+  NotFoundPage,
+  OopsPage,
+} from "./views/pages";
+
+
+import RootLayout from "./views/layouts/RootLayout";
+import PageTransition from "./components/PageTransition";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ThemeProvider defaultTheme="system" storageKey="happymap-theme">
+      <Routes>
+        {/* public routes */}
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="signin" element={<LoginPage />} />
+
+        {/* TODO: add a 404 page and 500 page with redirect button to home */}
+        <Route path="/oops" element={<OopsPage/>} />
+        <Route path="/404" element={<NotFoundPage/>} />
+
+        {/* private routes */}
+        <Route element={<PageTransition />}>
+          <Route element={<RootLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="explore" element={<ExplorePage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="category/gaming" element={<HomePage />} />
+          </Route>
+        </Route>
+      </Routes>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
